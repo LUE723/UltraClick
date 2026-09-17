@@ -1,0 +1,15 @@
+UltraClick 5 - 수정 후보 / 실제 입력 검증 미완료
+
+원본: 이전 최신 UltraClick 4 소스 (2026-09-17).
+기존 INPUT 선언은 검사에서 x64 40바이트 조건을 통과했습니다. 구조체 결함으로 단정할 근거는 없습니다.
+수정: INPUT/MOUSEINPUT 크기 및 union/dwExtraInfo 오프셋 시작 검증, UIntPtr 유지, SendInput [In]/SetLastError 선언, 반환 직후 Win32 오류 캡처, 실패 횟수/UI/LocalAppData\UltraClick\errors.log 기록.
+입력은 type=0, 좌클릭 down/up, 좌표/휠/키보드 입력 없음으로 검증합니다. burst는 INPUT 배열 한 번 호출입니다.
+F8 훅과 폴링 중복 제거, F8/ESC 대상 앱 전달 차단, 물리 XButton1만 훅 처리 및 메시지 큐로 전달, 주입 마우스 이벤트 무시. XButton1 폴링은 유지됩니다.
+Game Mode 기본값을 실제 누름/뗌 20ms로 변경. 기존 프리셋/Target CPS/Sent CPS/OFF 시작 유지.
+실패하면 정지하며 홀드 해제 후 재시작해야 합니다. 일부 down만 전송된 경우 up 한 번 복구 외 무한 재시도 없음.
+
+검증: 컴파일 성공. 모의 엔진 테스트 통과 (첨부 로그). 실제 클릭 테스트는 데스크톱 도구 실행 실패 후 사용자의 물리 ESC 중단으로 수행하지 못했습니다. 비프음 소멸, 실제 클릭 수신, 실제 게임 호환성은 미검증입니다. 확정 원인 또는 완전 해결본이 아닙니다.
+실제 좌클릭 진단 창 버튼으로 수신 창을 열고 자동 검사를 실행할 수 있습니다. 실제 SendInput으로 Normal/Game의 4개 프리셋과 Game 20ms를 검사합니다. 결과는 EXE 옆 live-test-results.txt에 저장합니다. 일반 실행은 OFF입니다.
+Source\build.cmd로 재빌드 가능합니다. Source에는 진단 창 및 모의 테스트도 포함됩니다.
+Microsoft API reference: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendinput
+Win32 오류 0도 입력 성공을 보장하지 않습니다. UIPI 차단 원인은 반환/오류만으로 판별되지 않습니다.

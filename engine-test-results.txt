@@ -1,0 +1,8 @@
+Mock sender only; no real mouse input. CPU percent is relative to ONE logical CPU.
+Preset 0: 953 mock CPS; CPU 0.00%; batches 254; waits 301
+Preset 1: 7090 mock CPS; CPU 0.00%; batches 472; waits 590
+Preset 2: 24903 mock CPS; CPU 0.00%; batches 829; waits 1052
+Preset 3: 61804 mock CPS; CPU 0.00%; batches 1317; waits 1687
+Target 100 CPS: 119 clicks in ~1.2s
+Exit during low-CPS wait: 0 ms
+PASS: startup, presets, saturation, pacing, stop, exit, game focus, release, partial input, sender error.
